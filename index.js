@@ -4,7 +4,7 @@ const express = require('express');
 const fetch = require('isomorphic-fetch');
 
 
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "";
 
 // Definindo variáveis e constantes
 const app = express();
