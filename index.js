@@ -3,15 +3,36 @@ const http = require('http');
 const express = require('express');
 const fetch = require('isomorphic-fetch');
 
-
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 // Definindo variáveis e constantes
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Definindo rotas do aplicativo
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>OpenAI API Demo</title>
+      </head>
+      <body>
+        <form action="/" method="POST">
+          <label for="message">Digite uma mensagem:</label>
+          <input type="text" id="message" name="message" />
+          <button type="submit">Enviar</button>
+        </form>
+      </body>
+    </html>
+  `);
+});
+
+// Adicionando middleware express.urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/', async (req, res) => {
+  const message = req.body.message;
+
   try {
     const response = await fetch("https://api.openai.com/v1/completions", {
       method: "POST",
@@ -22,16 +43,31 @@ app.get('/', async (req, res) => {
       },
       body: JSON.stringify({
         model: "text-davinci-003",
-        prompt: "hello Gpt",
+        prompt: "formate este texto e tire todos os elementos que nao importam no texto tipo highligth ou posiçao" + message,
         max_tokens: 2048, // tamanho da resposta
         temperature: 0.5, // criatividade na resposta
       }),
     });
 
     const data = await response.json();
-    console.log(data.choice)
-
-    res.send(data.choice);
+    const textFormat = data.choices[0].text.trim().split('.').map(p => `<p>${p.trim()}</p>`).join('');
+    console.log(textFormat)
+    
+    res.send(`
+      <html>
+        <head>
+          <title>OpenAI API Demo</title>
+        </head>
+        <body>
+          <form action="/" method="POST">
+            <label for="message">Escreva o texto que você quer formatar:</label>
+            <input type="text" id="message" name="message" value="${message}" />
+            <button type="submit">Enviar</button>
+          </form>
+          ${textFormat}
+        </body>
+      </html>
+    `);
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro ao obter resposta da API.');
