@@ -1,0 +1,38 @@
+body {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+input{
+    color: blueviolet;
+}
+
+#message {
+    font-size: 25px;
+    size: 40px;
+}
+
+.Text {
+    font-size: 30px;
+}
+
+label {
+    color: blueviolet;
+}
+
+form {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+}
+
+button {
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    font-size: 30px;
+}

@@ -2,24 +2,29 @@
 const http = require('http');
 const express = require('express');
 const fetch = require('isomorphic-fetch');
+const path = require('path');
 
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
+
+
 
 // Definindo variáveis e constantes
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.static(path.join(__dirname, 'public')));
 // Definindo rotas do aplicativo
 app.get('/', (req, res) => {
   res.send(`
-    <html>
-      <head>
-        <title>OpenAI API Demo</title>
-      </head>
+  <html>
+  <head>
+    <link href="styles.css" rel="stylesheet"/>
+    <title>OpenAI API Demo</title>
+  </head>
       <body>
         <form action="/" method="POST">
-          <label for="message">Digite uma mensagem:</label>
-          <input type="text" id="message" name="message" />
+          <label class="Text" for="message">Digite seu texto para formatar:</label>
+          <input type="text" id="message" name="message" autocomplete="off"/>
           <button type="submit">Enviar</button>
         </form>
       </body>
@@ -56,7 +61,20 @@ app.post('/', async (req, res) => {
     res.send(`
       <html>
         <head>
+          <link href="styles.css" rel="stylesheet"/>
           <title>OpenAI API Demo</title>
+          <script>
+          function copiarTexto() {
+            const textoFormatado = document.getElementById("texto-formatado").textContent;
+            navigator.clipboard.writeText(textoFormatado)
+              .then(() => {
+                alert("Texto copiado para a área de transferência!");
+              })
+              .catch((err) => {
+                alert("Erro ao copiar texto: " + err);
+              });
+          }
+          </script>
         </head>
         <body>
           <form action="/" method="POST">
@@ -64,7 +82,8 @@ app.post('/', async (req, res) => {
             <input type="text" id="message" name="message" value="${message}" />
             <button type="submit">Enviar</button>
           </form>
-          ${textFormat}
+          <div id="texto-formatado">${textFormat}</div>
+          <button onclick="copiarTexto()">Copiar</button>
         </body>
       </html>
     `);
