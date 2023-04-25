@@ -4,7 +4,7 @@ const express = require('express');
 const fetch = require('isomorphic-fetch');
 const path = require('path');
 
-const OPENAI_API_KEY = "";
+const OPENAI_API_KEY = process.env.API_KEY;
 
 
 
