@@ -4,6 +4,9 @@ const express = require('express');
 const fetch = require('isomorphic-fetch');
 const path = require('path');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const OPENAI_API_KEY = process.env.API_KEY;
 
 
