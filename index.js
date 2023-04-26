@@ -1,4 +1,3 @@
-// Importando os módulos necessários
 const http = require('http');
 const express = require('express');
 const fetch = require('isomorphic-fetch');
@@ -9,9 +8,6 @@ dotenv.config();
 
 const OPENAI_API_KEY = process.env.API_KEY;
 
-
-
-// Definindo variáveis e constantes
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -59,7 +55,6 @@ app.post('/', async (req, res) => {
 
     const data = await response.json();
     const textFormat = data.choices[0].text.trim().split('.').map(p => `<p>${p.trim()}</p>`).join('');
-    console.log(textFormat)
     
     res.send(`
       <html>
