@@ -54,13 +54,7 @@ app.post('/', async (req, res) => {
     });
 
     const data = await response.json();
-    if (data.choices && data.choices.length > 0) {
-      const textFormat = data.choices[0].text.trim().split('.').map(p => `<p>${p.trim()}</p>`).join('');
-      // rest of your code that uses textFormat
-    } else {
-      console.error('data.choices is undefined or empty');
-      // handle the error appropriately, e.g. return an error response or throw an exception
-    }
+    const textFormat = data.choices[0].text.trim().split('.').map(p => `<p>${p.trim()}</p>`).join('');
     
     res.send(`
       <html>
