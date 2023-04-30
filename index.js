@@ -12,7 +12,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
-// Definindo rotas do aplicativo
+
+// Defining application routes
 app.get('/', (req, res) => {
   res.send(`
   <html>
@@ -31,7 +32,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Adicionando middleware express.urlencoded
+// Adding express.urlencoded middleware
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/', async (req, res) => {
@@ -48,8 +49,8 @@ app.post('/', async (req, res) => {
       body: JSON.stringify({
         model: "text-davinci-003",
         prompt: "formate este texto e tire todos os elementos que nao importam no texto tipo highligth ou posiçao" + message,
-        max_tokens: 2048, // tamanho da resposta
-        temperature: 0.5, // criatividade na resposta
+        max_tokens: 2048, // response length
+        temperature: 0.5, // creativity in response
       }),
     });
 
@@ -91,7 +92,7 @@ app.post('/', async (req, res) => {
   }
 });
 
-// Iniciando o servidor
+// Starting the server
 http.createServer(app).listen(port, () => {
   console.log(`Servidor iniciado na porta ${port}`);
 });
